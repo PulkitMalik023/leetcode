@@ -1,0 +1,34 @@
+https://leetcode.com/problems/reverse-integer/
+
+
+
+class Solution {
+public:
+    
+    int helper(int x){
+       long long int n=0;
+        while(x!=0){
+            int rem=x%10;
+            n=(n*10)+rem;
+            if(n>INT_MAX) return 0;
+            x=x/10;
+        }
+        return n;
+    }
+    
+    int reverse(int x) {
+        if(x<=INT_MIN) return 0;
+        int flag=1;
+        if(x < 0){
+          flag=-1; 
+          x=abs(x);
+        } 
+        
+        
+        int a=helper(x);
+        if(flag==-1){
+            a=-a;
+        }
+        return a;
+    }
+};
