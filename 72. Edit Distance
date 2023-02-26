@@ -1,0 +1,102 @@
+https://leetcode.com/problems/edit-distance/
+
+
+
+
+class Solution {
+
+public:
+
+    
+
+    int edit_distance(string a,string b,int **arr){
+
+if(a.size()==0 || b.size()==0){
+
+    return max(a.size(),b.size());
+
+}
+
+int m=a.size();
+
+int n=b.size();
+
+if(arr[m][n]!=-1){
+
+    return arr[m][n];
+
+}
+
+if(a[0] == b[0]){
+
+    arr[m][n]= edit_distance(a.substr(1),b.substr(1),arr);  ///  if both characters are same
+
+}
+
+else{
+
+    arr[m-1][n]=edit_distance(a.substr(1),b,arr) ; /// insert
+
+    arr[m-1][n-1]=edit_distance(a.substr(1),b.substr(1),arr) ;  /// update
+
+    arr[m][n-1]=edit_distance(a,b.substr(1),arr);  /// remove
+
+    arr[m][n] = 1+ min(arr[m-1][n],min(arr[m-1][n-1],arr[m][n-1]));
+
+}
+
+return arr[m][n];
+
+}
+
+    
+
+    
+
+    int minDistance(string word1, string word2) {
+
+       //cout << edit_distance(str,str2,arr);
+
+int **arr=new int*[word1.size()+1];
+
+for(int i=0;i<word1.size()+1;i++){
+
+     arr[i]=new int[word2.size()+1];
+
+}
+
+for(int j=0;j<word2.size()+1;j++){
+
+    arr[0][j]=j;
+
+}
+
+for(int i=0;i<word1.size()+1;i++){
+
+    arr[i][0]=i;
+
+}
+
+for(int i=1;i<word1.size()+1;i++){
+
+    for(int j=1;j<word2.size()+1;j++){
+
+        if(word1[word1.size()-i] == word2[word2.size()-j]){
+
+            arr[i][j]=arr[i-1][j-1];
+
+        }
+
+        else{
+
+        arr[i][j]=min(arr[i][j-1],min(arr[i-1][j],arr[i-1][j-1]))+1;}
+
+    }
+
+}
+
+return arr[word1.size()][word2.size()];
+
+    }
+
+};
