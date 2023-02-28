@@ -1,0 +1,37 @@
+https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+
+
+
+class Solution {
+public:
+    // take 2 dummy nodes move fast by n times then move slow and fast one by one untill fast->next!=NULL then is fast==NULL RETURN head->next else slow->next=slow->next->next;  return head
+    //  https://www.youtube.com/watch?v=Lhu3MsXZy-Q&ab_channel=takeUforward
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+       if(head->next==NULL) return NULL;
+        
+        // make a dummy node means no data and in its next head is store
+        ListNode* temp=new ListNode(); // no data will be passed
+        temp->next=head;   // and its next will point to head
+        ListNode* fast=temp;
+        ListNode* slow=temp;
+        
+        // move the fast pointer n times
+        for(int i=1;i<=n;i++){
+            fast=fast->next;
+        }
+        
+        // now move the fast and slow by one when fast reches to last index then slow->next=slow->next->next
+        int flag=0;
+        while(fast->next!=NULL){
+            fast=fast->next;
+            slow=slow->next;
+            flag=1;
+        }
+        
+        // if(slow==NULL) return head->next;  agar ye condtion lga dega toh return kr diyo head niche
+        
+        slow->next=slow->next->next;
+        return temp->next;
+        
+    }
+};
